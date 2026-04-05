@@ -504,9 +504,9 @@ function parseCSV(csv) {
 
 // GoogleドライブURLを画像URLに変換
 function toImgUrl(url) {
-  if (!url) return '';
+  if (!url || url.trim() === '') return '';
   var match = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
-  if (match) return 'https://drive.google.com/thumbnail?id=' + match[1] + '&sz=w600';
+  if (match) return 'https://lh3.googleusercontent.com/d/' + match[1];
   return '';
 }
 
