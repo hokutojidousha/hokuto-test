@@ -601,11 +601,12 @@ function renderCars() {
   for (var ii = 0; ii < allCars.length; ii++) {
     var igUrl = (allCars[ii].instagramURL || '').trim();
     var igImg = (allCars[ii].instagramImage || '').trim();
+    var igMemo = (allCars[ii].instagrammemo || '').trim();
     if (igUrl !== '') {
       igPosts.push({
         url: igUrl,
         image: igImg,
-        caption: allCars[ii].name || ''
+        caption: igMemo
       });
     }
   }
