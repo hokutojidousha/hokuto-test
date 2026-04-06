@@ -596,14 +596,15 @@ function renderCars() {
   var el = document.getElementById('carCount');
   if (el) el.innerHTML = allCars.filter(function(c) { return c.sold !== 'TRUE' && c.sold !== true; }).length + '<span>台</span>';
 
-  // InstagramグリッドをinstagramURL列から生成
+  // InstagramグリッドをinstagramURL・instagramImage列から生成
   var igPosts = [];
   for (var ii = 0; ii < allCars.length; ii++) {
-    var igUrl = allCars[ii].instagramURL || allCars[ii].instagramurl || '';
-    if (igUrl && igUrl.trim() !== '') {
+    var igUrl = (allCars[ii].instagramURL || '').trim();
+    var igImg = (allCars[ii].instagramImage || '').trim();
+    if (igUrl !== '') {
       igPosts.push({
-        url: igUrl.trim(),
-        image: allCars[ii].image || '',
+        url: igUrl,
+        image: igImg,
         caption: allCars[ii].name || ''
       });
     }
