@@ -678,10 +678,9 @@ function renderIgGrid(posts) {
   var html = '';
   for (var i = 0; i < posts.length; i++) {
     var p = posts[i];
-    // GitHubのURLはそのまま、GoogleドライブのURLは変換
-    var imgUrl = p.image && p.image.trim() !== ''
-      ? (p.image.indexOf('drive.google.com') !== -1 ? toImgUrl(p.image) : p.image)
-      : '';
+    // 画像URL（スペース・改行を除去してそのまま使用）
+    var rawImg = p.image ? p.image.trim().replace(/\r/g,'').replace(/\n/g,'') : '';
+    var imgUrl = rawImg !== '' ? (rawImg.indexOf('drive.google.com') !== -1 ? toImgUrl(rawImg) : rawImg) : '';
     html += '<a href="' + p.url + '" target="_blank" class="ig-cell">';
     html += '<div class="ig-thumb">';
     if (imgUrl) {
