@@ -505,9 +505,13 @@ function parseCSV(csv) {
 // GoogleドライブURLを画像URLに変換
 function toImgUrl(url) {
   if (!url || url.trim() === '') return '';
+  // GitHubのURLはそのまま返す
+  if (url.indexOf('github.io') !== -1 || url.indexOf('githubusercontent') !== -1) return url;
+  // GoogleドライブのURLは変換
   var match = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
   if (match) return 'https://lh3.googleusercontent.com/d/' + match[1];
-  return '';
+  // その他のURLもそのまま返す
+  return url;
 }
 
 // 車両カードを描画
