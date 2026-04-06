@@ -702,9 +702,15 @@ function loadIgSheet() {
     .then(function(res) { return res.text(); })
     .then(function(text) {
       var parsed = parseCSV(text);
-      if (parsed.length > 0) renderIgGrid(parsed);
+      if (parsed.length > 0) {
+        // デバッグ：最初の投稿の画像URLをコンソールに出力
+        console.log('IG parsed:', parsed.length, '件');
+        console.log('1件目 image URL:', JSON.stringify(parsed[0].image));
+        console.log('1件目 url:', JSON.stringify(parsed[0].url));
+        renderIgGrid(parsed);
+      }
     })
-    .catch(function() {});
+    .catch(function(e) { console.log('IG fetch error:', e); });
 }
 
 window.onload = function() { init(); loadIgSheet(); };
