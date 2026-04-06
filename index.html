@@ -595,6 +595,20 @@ function renderCars() {
   grid.innerHTML = html;
   var el = document.getElementById('carCount');
   if (el) el.innerHTML = allCars.filter(function(c) { return c.sold !== 'TRUE' && c.sold !== true; }).length + '<span>台</span>';
+
+  // InstagramグリッドをinstagramURL列から生成
+  var igPosts = [];
+  for (var ii = 0; ii < allCars.length; ii++) {
+    var igUrl = allCars[ii].instagramURL || allCars[ii].instagramurl || '';
+    if (igUrl && igUrl.trim() !== '') {
+      igPosts.push({
+        url: igUrl.trim(),
+        image: allCars[ii].image || '',
+        caption: allCars[ii].name || ''
+      });
+    }
+  }
+  if (igPosts.length > 0) renderIg(igPosts);
 }
 
 // ===== Instagramレンダリング =====
@@ -683,19 +697,8 @@ window.onload = function() {
     })
     .catch(function() {});
 
-  // Instagramスプレッドシート（在庫車と同じ処理）
-  fetch(IG_SHEET_URL)
-    .then(function(r) { return r.text(); })
-    .then(function(t) {
-      console.log('IG CSV raw:', t.substring(0, 200));
-      var d = parseCSV(t);
-      console.log('IG parsed:', d.length, '件');
-      if (d.length > 0) {
-        console.log('1件目:', JSON.stringify(d[0]));
-        renderIg(d);
-      }
-    })
-    .catch(function(e) { console.log('IG fetch error:', e); });
+  // Instagramグリッド：在庫車シートのinstagramURL列を使用
+  // （CAR_SHEET_URLは既に読み込み済みのため、allCarsから取得）
 };
 </script>
 </body>
