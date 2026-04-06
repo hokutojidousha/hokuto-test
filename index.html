@@ -683,14 +683,19 @@ window.onload = function() {
     })
     .catch(function() {});
 
-  // Instagramスプレッドシート
+  // Instagramスプレッドシート（在庫車と同じ処理）
   fetch(IG_SHEET_URL)
     .then(function(r) { return r.text(); })
     .then(function(t) {
+      console.log('IG CSV raw:', t.substring(0, 200));
       var d = parseCSV(t);
-      if (d.length > 0) renderIg(d);
+      console.log('IG parsed:', d.length, '件');
+      if (d.length > 0) {
+        console.log('1件目:', JSON.stringify(d[0]));
+        renderIg(d);
+      }
     })
-    .catch(function() {});
+    .catch(function(e) { console.log('IG fetch error:', e); });
 };
 </script>
 </body>
